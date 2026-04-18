@@ -6,6 +6,7 @@ pipeline {
         VM_USER = "javz"
     }
 
+    stages {
         stage('Deploy en VM') {
             steps {
                 sh """
