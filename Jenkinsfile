@@ -1,25 +1,30 @@
 pipeline {
     agent any
 
-    stages {
+    environment {
+        VM_IP = "192.168.1.11"
+        VM_USER = "javz"
+    }
 
+    stages {
         stage('Clonar repositorio') {
             steps {
                 git 'https://github.com/RBJavz/mi-repositorio-devops.git'
             }
         }
 
-        stage('Construir Docker') {
+        stage('Deploy en VM') {
             steps {
-                sh 'docker build -t mi-app ./app'
+                sh """
+                ssh ${javz}@${192.168.1.11} '
+                cd mi-repositorio-devops || git clone https://github.com/RBJavz/mi-repositorio-devops.git
+                cd mi-repositorio-devops
+                docker stop mi-contenedor || true
+                docker rm mi-contenedor || true
+                docker-compose up -d --build
+                '
+                """
             }
         }
-
-        stage('Ejecutar contenedor') {
-            steps {
-                sh 'docker run -d -p 5000:5000 mi-app'
-            }
-        }
-
     }
 }
