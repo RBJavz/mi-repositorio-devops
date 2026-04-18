@@ -16,7 +16,7 @@ pipeline {
         stage('Deploy en VM') {
             steps {
                 sh """
-                ssh ${javz}@${192.168.1.11} '
+                ssh ${VM_USER}@${VM_IP} '
                 cd mi-repositorio-devops || git clone https://github.com/RBJavz/mi-repositorio-devops.git
                 cd mi-repositorio-devops
                 docker stop mi-contenedor || true
