@@ -6,13 +6,6 @@ pipeline {
         VM_USER = "javz"
     }
 
-    stages {
-        stage('Clonar repositorio') {
-            steps {
-                git 'https://github.com/RBJavz/mi-repositorio-devops.git'
-            }
-        }
-
         stage('Deploy en VM') {
             steps {
                 sh """
