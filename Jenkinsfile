@@ -10,7 +10,7 @@ pipeline {
         stage('Deploy en VM') {
             steps {
                 bat """
-                ssh %VM_USER%@%VM_IP% ^
+                ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 %VM_USER%@%VM_IP% ^
                 "cd mi-repositorio-devops || git clone https://github.com/RBJavz/mi-repositorio-devops.git && ^
                 cd mi-repositorio-devops && ^
                 docker-compose up -d --build"
